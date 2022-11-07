@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 var todoData = snapshot.data?[index];
 
-                print('todoData-> $todoData');
+                // print('todoData-> $todoData');
                 return Container(
                   height: 100.0,
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -67,6 +67,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               InkWell(
                                   onTap: () {
                                     // Add the Method
+
+                                    // first make repository and todo repository then controller
+                                    todoController
+                                        .updatePatchCompleted(todoData!)
+                                        .then((value) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          duration:
+                                              const Duration(milliseconds: 500),
+                                          content: Text(value),
+                                        ),
+                                      );
+                                    });
                                   },
                                   child: buildCallContainer(
                                       'Patch', Colors.orange[600]!)),

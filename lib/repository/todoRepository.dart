@@ -13,6 +13,7 @@ class TodoRepository implements Repository {
     throw UnimplementedError();
   }
 
+// GET
   @override
   Future<List<Todo>> getTodoList() async {
     // TODO: implement getTodoList
@@ -20,7 +21,7 @@ class TodoRepository implements Repository {
     List<Todo> todoList = [];
     var url = Uri.parse('$dataUrl/todos');
     var response = await http.get(url);
-    print('Status Code : ${response.statusCode} ${response.body}');
+    // print('Status Code : ${response.statusCode} ${response.body}');
     var body = json.decode(response.body); // convert
 
     //  Parse
@@ -30,10 +31,30 @@ class TodoRepository implements Repository {
     return todoList;
   }
 
+// Patch
+// here modify passed varible only
   @override
-  Future<String> patchCompleted(Todo todo) {
+  Future<String> patchCompleted(Todo todo) async {
     // TODO: implement patchCompleted
-    throw UnimplementedError();
+    // throw UnimplementedError();
+    var url = Uri.parse('$dataUrl/todos/${todo.id}');
+    // call back data
+    String resData = '';
+    // bool? => String
+    await http.patch(
+      url,
+      body: {
+        'completed': (todo.completed!).toString(),
+      },
+      headers: {'Authorization': 'your_token'},
+    ).then((response) {
+      // homescreen => data
+      Map<String, dynamic> result = json.decode(response.body);
+      // print("patchResult-> $result");
+      return resData = result['completed'];
+    });
+
+    return resData;
   }
 
   @override

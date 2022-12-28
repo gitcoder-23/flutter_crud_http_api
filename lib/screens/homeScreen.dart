@@ -41,69 +41,69 @@ class _HomeScreenState extends State<HomeScreen> {
           }
 
           return ListView.separated(
-              itemBuilder: (context, index) {
-                var todoData = snapshot.data?[index];
+            itemBuilder: (context, index) {
+              var todoData = snapshot.data?[index];
 
-                // print('todoData-> $todoData');
-                return Container(
-                  height: 100.0,
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Text('${todoData?.id}'),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Text('${todoData?.title}'),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              // add onTap
-                              InkWell(
-                                  onTap: () {
-                                    // Add the Method
+              // print('todoData-> $todoData');
+              return Container(
+                height: 100.0,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Text('${todoData?.id}'),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text('${todoData?.title}'),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            // add onTap
+                            InkWell(
+                                onTap: () {
+                                  // Add the Method
 
-                                    // first make repository and todo repository then controller
-                                    todoController
-                                        .updatePatchCompleted(todoData!)
-                                        .then((value) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          duration:
-                                              const Duration(milliseconds: 500),
-                                          content: Text(value),
-                                        ),
-                                      );
-                                    });
-                                  },
-                                  child: buildCallContainer(
-                                      'Patch', Colors.orange[600]!)),
+                                  // first make repository and todo repository then controller
+                                  todoController
+                                      .updatePatchCompleted(todoData!)
+                                      .then((value) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        content: Text(value),
+                                      ),
+                                    );
+                                  });
+                                },
+                                child: buildCallContainer(
+                                    'Patch', Colors.orange[600]!)),
 
-                              InkWell(
-                                  child: buildCallContainer(
-                                      'Put', Colors.purple[600]!)),
-                              InkWell(
-                                  child: buildCallContainer(
-                                      'Delete', Colors.red[600]!)),
-                            ]),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const Divider(
-                  thickness: 0.5,
-                  height: 0.5,
-                );
-              },
-              itemCount: snapshot.data?.length ?? 0);
+                            InkWell(
+                                child: buildCallContainer(
+                                    'Put', Colors.purple[600]!)),
+                            InkWell(
+                                child: buildCallContainer(
+                                    'Delete', Colors.red[600]!)),
+                          ]),
+                    ),
+                  ],
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const Divider(
+                thickness: 0.5,
+                height: 0.5,
+              );
+            },
+            itemCount: snapshot.data?.length ?? 0,
+          );
         }),
       ),
     );
